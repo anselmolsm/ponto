@@ -182,7 +182,7 @@ def main():
     parser.add_argument("--arrive", default="", metavar="hh:mm|now", type=checkTimeFormat, help="Seta o tempo de entrada do dia para hh:mm.")
     parser.add_argument("--departure", default="", metavar="hh:mm|now", type=checkTimeFormat, help="Seta o tempo de saída do dia para hh:mm")
     parser.add_argument("--today", metavar="dd/mm/yyyy", type=checkDateFormat, help="Finge que hoje é dd/mm para todos os demais comandos.")
-    parser.add_argument("--note", metavar="text", help="Seta uma nota sobre este dia.")
+    parser.add_argument("--note", default="", metavar="text", help="Seta uma nota sobre este dia.")
     args = parser.parse_args(sys.argv[1:])
 
     if args.arrive or args.departure or args.note:
