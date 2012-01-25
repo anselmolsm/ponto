@@ -61,10 +61,12 @@ def prettyPrint(date, arrive, departure = "", notes = ""):
         balanceMinutes -= 8*60 + 48
 
     flags = []
-    if arriveMinutes < (12*60 + 30) and workedMinutes > 120:
-        balanceMinutes -= 60
-    else:
+    if workedMinutes > 120:
+      balanceMinutes -= 60
+    if not (arriveMinutes < (12*60 + 30) and workedMinutes > 120):
         flags.append("Sem Almoço")
+        if workedMinutes > 478:
+            flags.append("H.Ex 50%%:%s" % minutesToTime(workedMinutes - 478))
     if departureMinutes > 22*60:
         flags.append("Adicional noturno")
     if workedMinutes > (11*60 + 48):
