@@ -62,11 +62,13 @@ def prettyPrint(date, arrive, departure = "", notes = ""):
 
     flags = []
     if workedMinutes > 120:
-      balanceMinutes -= 60
+        balanceMinutes -= 60
     if not (arriveMinutes < (12*60 + 30) and workedMinutes > 120):
         flags.append("Sem Almoço")
-        if workedMinutes > 478:
+        if workedMinutes > (8 * 60 + 48): # need to check this value
             flags.append("H.Ex 50%%:%s" % minutesToTime(workedMinutes - 478))
+        else:
+            balanceMinutes += 60
     if departureMinutes > 22*60:
         flags.append("Adicional noturno")
     if workedMinutes > (11*60 + 48):
@@ -145,7 +147,13 @@ class DbUpdater (object):
 
     def save(self):
         f = open(DATA_FILE, "w")
-        self.data.sort()
+
+        def _keyfunc(x):
+            date1 = x.split(",", 2)[0].split("/", 3)
+            date1.reverse()
+            return "".join(date1)
+
+        self.data.sort(key=_keyfunc)
         f.write("".join(self.data))
         f.close()
 
@@ -163,7 +171,9 @@ def checkDateFormat(date):
     p = re.compile('^\d{1,2}/\d{1,2}/\d{4}$')
     if not p.match(date):
         raise argparse.ArgumentTypeError("Formato da data esta errado!")
-    return date
+    # fix possible wrong date, ugly but works! (tm)
+    d = date.split("/")
+    return "%02d/%02d/%d" % (int(d[0]), int(d[1]), int(d[2]))
 
 def updateDb(arrive = "", departure = "", note = "", today = ""):
     updater = DbUpdater()
