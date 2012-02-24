@@ -108,7 +108,7 @@ class DbUpdater (object):
         self._now = nowObj.strftime("%H:%M")
         self._dataUpdated = False
         self._departure = ""
-        self._arrive = ""
+        self._arrival = ""
         self.data = []
         try:
             f = open(DATA_FILE, "r")
@@ -132,8 +132,8 @@ class DbUpdater (object):
 
             if self._departure:
                 data[2] = self._departure
-            if self._arrive:
-                data[1] = self._arrive
+            if self._arrival:
+                data[1] = self._arrival
             if self._note:
                 data[3] = self._note
             data[3] = data[3].strip()
@@ -143,7 +143,7 @@ class DbUpdater (object):
             return line
 
     def addNewEntry(self):
-        self.data.append("%s,%s,%s,%s\n" % (self._today, self._arrive, self._departure, self._note))
+        self.data.append("%s,%s,%s,%s\n" % (self._today, self._arrival, self._departure, self._note))
 
     def save(self):
         f = open(DATA_FILE, "w")
@@ -175,15 +175,15 @@ def checkDateFormat(date):
     d = date.split("/")
     return "%02d/%02d/%d" % (int(d[0]), int(d[1]), int(d[2]))
 
-def updateDb(arrive = "", departure = "", note = "", today = ""):
+def updateDb(arrival = "", departure = "", note = "", today = ""):
     updater = DbUpdater()
-    updater._arrive = arrive
+    updater._arrival = arrival
     updater._departure = departure
     updater._note = note
     if today:
         updater._today = today
     updater.update()
-    updater._arrive = ""
+    updater._arrival = ""
     updater._departure = ""
     updater._note = ""
     updater._today = ""
@@ -197,8 +197,8 @@ def main():
     parser.add_argument("--note", default="", metavar="text", help="Seta uma nota sobre este dia.")
     args = parser.parse_args(sys.argv[1:])
 
-    if args.arrive or args.departure or args.note:
-        updateDb(args.arrive, args.departure, args.note, args.today)
+    if args.arrival or args.departure or args.note:
+        updateDb(args.arrival, args.departure, args.note, args.today)
     else:
         printReport()
 
