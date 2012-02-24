@@ -191,7 +191,7 @@ def updateDb(arrive = "", departure = "", note = "", today = ""):
 
 def main():
     parser = argparse.ArgumentParser(description="Cadastra seu ponto num arquivo txt =]", epilog="Se nenhum argumento for passado, o relatório é impresso na tela. Todas as horas devem ser no formato 24hrs.")
-    parser.add_argument("--arrive", default="", metavar="hh:mm|now", type=checkTimeFormat, help="Seta o tempo de entrada do dia para hh:mm.")
+    parser.add_argument("--arrival", default="", metavar="hh:mm|now", type=checkTimeFormat, help="Seta o tempo de entrada do dia para hh:mm.")
     parser.add_argument("--departure", default="", metavar="hh:mm|now", type=checkTimeFormat, help="Seta o tempo de saída do dia para hh:mm")
     parser.add_argument("--today", metavar="dd/mm/yyyy", type=checkDateFormat, help="Finge que hoje é dd/mm para todos os demais comandos.")
     parser.add_argument("--note", default="", metavar="text", help="Seta uma nota sobre este dia.")
