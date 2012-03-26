@@ -38,6 +38,8 @@ def prettyPrint(date, arrive, departure = "", notes = ""):
         arriveMinutes = timeToMinutes(arrive)
     if departure:
         departureMinutes = timeToMinutes(departure)
+        if departureMinutes < arriveMinutes:
+            departureMinutes += 24*60
 
     if not arrive and not departure: # just a note
         print("%10s                        \033[1;37m%s\033[0m" % (date,notes))
@@ -54,7 +56,6 @@ def prettyPrint(date, arrive, departure = "", notes = ""):
         primeTime = minutesToTime(timeToGo, "\033[1;34m")
         print("%10s  %5s  %5s       \033[5m?\033[0m  \033[1;30m%s\033[0m" % (date, arrive, primeTime, notes))
         return 0
-    departureMinutes = timeToMinutes(departure)
     workedMinutes = departureMinutes - arriveMinutes
     balanceMinutes = workedMinutes
     if not isWeekend:
