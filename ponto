@@ -200,6 +200,7 @@ def main():
 
     if args.arrival or args.departure or args.note:
         updateDb(args.arrival, args.departure, args.note, args.today)
+        printReport()
     else:
         printReport()
 
